@@ -58,6 +58,7 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "class-validator": "^0.13.2"
   }
 }
