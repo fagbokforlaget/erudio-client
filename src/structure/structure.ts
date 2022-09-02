@@ -16,10 +16,6 @@ export class Structure {
 
   public async listNodes(namespace: string, options?: Options): Promise<any> {
     const url = this.base_url + `/structures/${namespace}/nodes/`;
-    try {
-      return await apiClient.get(url, { params: options });
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    return await apiClient.get(url, { params: options });
   }
 }
