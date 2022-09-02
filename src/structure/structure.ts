@@ -10,8 +10,8 @@ export interface Options {
 export class Structure {
   private base_url: string;
 
-  constructor(base_url: string) {
-    this.base_url = base_url;
+  constructor(host: string) {
+    this.base_url = `http://edtech-structure-service.${host}`;
   }
 
   public async listNodes(namespace: string, options?: Options): Promise<any> {
@@ -19,7 +19,7 @@ export class Structure {
     try {
       return await apiClient.get(url, { params: options });
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   }
 }

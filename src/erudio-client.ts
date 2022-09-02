@@ -4,23 +4,23 @@ import { Structure, Options } from './structure/structure';
 import { ContentFusion } from './content-fusion/content-fusion';
 
 export class ErudioClient {
-  private base_url: string;
+  private host: string;
 
-  constructor(base_url: string) {
-    this.base_url = base_url;
+  constructor(host: string) {
+    this.host = host;
   }
 
   public getStructures = async (
     namespace: string,
     options: Options,
   ): Promise<FindByNamespaceOutputDto> => {
-    return new Structure(this.base_url).listNodes(namespace, options);
+    return new Structure(this.host).listNodes(namespace, options);
   };
 
   public getStructureNode = async (
     structure_id: string,
     locale: string,
   ): Promise<StructureNodeOutputDto> => {
-    return new ContentFusion(this.base_url).getNode(structure_id, locale);
+    return new ContentFusion(this.host).getStructureNode(structure_id, locale);
   };
 }

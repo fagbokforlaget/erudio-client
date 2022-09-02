@@ -4,11 +4,14 @@ import { StructureNodeOutputDto } from '../content-fusion/dto/structure-node-out
 export class ContentFusion {
   private base_url: string;
 
-  constructor(base_url: string) {
-    this.base_url = base_url;
+  constructor(host: string) {
+    this.base_url = `http://edtech-content-fusion-service.${host}`;
   }
 
-  public async getNode(structure_id: string, locale: string): Promise<any> {
+  public async getStructureNode(
+    structure_id: string,
+    locale: string,
+  ): Promise<any> {
     const url = this.base_url + `/content/${structure_id}/`;
     try {
       const res: StructureNodeOutputDto = await apiClient.get(url);
@@ -18,7 +21,7 @@ export class ContentFusion {
         res.localization[locale] = localization;
       }
     } catch (error) {
-      return error;
+      return Promise.reject(error);
     }
   }
 }
