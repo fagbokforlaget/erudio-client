@@ -2,17 +2,17 @@ import { apiClient } from '../erudio';
 import { StructureNodeOutputDto } from '../content-fusion/dto/structure-node-output.dto';
 
 export class ContentFusion {
-  private base_url: string;
+  private baseUrl: string;
 
   constructor(host: string) {
-    this.base_url = `http://edtech-content-fusion-service.${host}`;
+    this.baseUrl = `http://edtech-content-fusion-service.${host}`;
   }
 
   public async getStructureNode(
-    structure_id: string,
+    structureId: string,
     locale: string,
   ): Promise<any> {
-    const url = this.base_url + `/content/${structure_id}/`;
+    const url = `${this.baseUrl}/content/${structureId}/`;
     const res: StructureNodeOutputDto = await apiClient.get(url);
     if (locale) {
       const localization = res.localization[locale];

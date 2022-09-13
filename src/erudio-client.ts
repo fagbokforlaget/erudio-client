@@ -12,15 +12,15 @@ export class ErudioClient {
 
   public getStructures = async (
     namespace: string,
-    options: Options,
+    options?: Options,
   ): Promise<FindByNamespaceOutputDto> => {
     return new Structure(this.host).listNodes(namespace, options);
   };
 
   public getStructureNode = async (
-    structure_id: string,
+    structureId: string,
     locale: string,
   ): Promise<StructureNodeOutputDto> => {
-    return new ContentFusion(this.host).getStructureNode(structure_id, locale);
+    return new ContentFusion(this.host).getStructureNode(structureId, locale);
   };
 }

@@ -8,14 +8,14 @@ export interface Options {
 }
 
 export class Structure {
-  private base_url: string;
+  private baseUrl: string;
 
   constructor(host: string) {
-    this.base_url = `http://edtech-structure-service.${host}`;
+    this.baseUrl = `http://edtech-structure-service.${host}`;
   }
 
   public async listNodes(namespace: string, options?: Options): Promise<any> {
-    const url = this.base_url + `/structures/${namespace}/nodes/`;
+    const url = `${this.baseUrl}/structures/${namespace}/nodes/`;
     return await apiClient.get(url, { params: options });
   }
 }
