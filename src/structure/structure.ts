@@ -1,4 +1,6 @@
+import { AxiosResponse } from 'axios';
 import { apiClient } from '../erudio';
+import { Node, PaginatedNodes } from './dto/find-by-namespace-output.dto';
 
 export interface Options {
   filter?: string;
@@ -14,8 +16,14 @@ export class Structure {
     this.baseUrl = `http://edtech-structure-service.${host}`;
   }
 
-  public async listNodes(namespace: string, options?: Options): Promise<any> {
+  public async listNodes(
+    namespace: string,
+    options?: Options,
+  ): Promise<AxiosResponse<PaginatedNodes<Node>, any>> {
     const url = `${this.baseUrl}/structures/${namespace}/nodes/`;
-    return await apiClient.get(url, { params: options });
+    const res = await apiClient.get<PaginatedNodes<Node>>(url, {
+      params: options,
+    });
+    return res;
   }
 }

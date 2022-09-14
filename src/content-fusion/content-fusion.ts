@@ -1,5 +1,6 @@
 import { apiClient } from '../erudio';
-import { StructureNodeOutputDto } from '../content-fusion/dto/structure-node-output.dto';
+import { ContentNode } from '../content-fusion/dto/structure-node-output.dto';
+import { AxiosResponse } from 'axios';
 
 export class ContentFusion {
   private baseUrl: string;
@@ -10,14 +11,14 @@ export class ContentFusion {
 
   public async getStructureNode(
     structureId: string,
-    locale: string,
-  ): Promise<any> {
+    locale?: string,
+  ): Promise<AxiosResponse<ContentNode, any>> {
     const url = `${this.baseUrl}/content/${structureId}/`;
-    const res: StructureNodeOutputDto = await apiClient.get(url);
+    const res = await apiClient.get<ContentNode>(url);
     if (locale) {
-      const localization = res.localization[locale];
-      res.localization = {};
-      res.localization[locale] = localization;
+      const localization = res.data.localization[locale];
+      res.data.localization = {};
+      res.data.localization[locale] = localization;
     }
     return res;
   }
