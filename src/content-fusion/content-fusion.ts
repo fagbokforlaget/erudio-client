@@ -1,5 +1,5 @@
 import { apiClient } from '../erudio';
-import { ContentNode } from '../content-fusion/dto/structure-node-output.dto';
+import { ContentNode } from './dto/content-node-dto';
 import { AxiosResponse } from 'axios';
 
 export class ContentFusion {
@@ -13,7 +13,7 @@ export class ContentFusion {
     structureId: string,
     locale?: string,
   ): Promise<AxiosResponse<ContentNode, any>> {
-    const url = `${this.baseUrl}/content/${structureId}/`;
+    const url = `${this.baseUrl}/content/${structureId}`;
     const res = await apiClient.get<ContentNode>(url);
     if (locale) {
       const localization = res.data.localization[locale];

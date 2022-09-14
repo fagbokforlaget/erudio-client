@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { apiClient } from '../erudio';
-import { Node, PaginatedNodes } from './dto/find-by-namespace-output.dto';
+import { Node, PaginatedNodes } from './dto/paginated-nodes-dto';
 
 export interface Options {
   filter?: string;
@@ -20,7 +20,7 @@ export class Structure {
     namespace: string,
     options?: Options,
   ): Promise<AxiosResponse<PaginatedNodes<Node>, any>> {
-    const url = `${this.baseUrl}/structures/${namespace}/nodes/`;
+    const url = `${this.baseUrl}/structures/${namespace}/nodes`;
     const res = await apiClient.get<PaginatedNodes<Node>>(url, {
       params: options,
     });
