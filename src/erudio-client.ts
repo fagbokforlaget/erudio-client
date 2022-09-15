@@ -1,8 +1,5 @@
-import {
-  Node,
-  PaginatedNodes,
-} from './structure/dto/find-by-namespace-output.dto';
-import { ContentNode } from './content-fusion/dto/structure-node-output.dto';
+import { Node, PaginatedNodes } from './structure/dto/paginated-nodes-dto';
+import { ContentNode } from './content-fusion/dto/content-node-dto';
 import { Structure, Options } from './structure/structure';
 import { ContentFusion } from './content-fusion/content-fusion';
 import { AxiosResponse } from 'axios';
