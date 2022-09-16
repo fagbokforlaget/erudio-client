@@ -1,6 +1,5 @@
-import { AxiosResponse } from 'axios';
-import { apiClient } from '../erudio';
 import { Node, PaginatedNodes } from './dto/paginated-nodes-dto';
+import { HttpClientProxy } from '../utils/http-client-proxy';
 
 export interface Options {
   filter?: string;
@@ -19,11 +18,10 @@ export class Structure {
   public async listNodes(
     namespace: string,
     options?: Options,
-  ): Promise<AxiosResponse<PaginatedNodes<Node>, any>> {
+  ): Promise<PaginatedNodes<Node>> {
     const url = `${this.baseUrl}/structures/${namespace}/nodes`;
-    const res = await apiClient.get<PaginatedNodes<Node>>(url, {
+    return await new HttpClientProxy().get<PaginatedNodes<Node>>(url, {
       params: options,
     });
-    return res;
   }
 }

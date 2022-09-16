@@ -1,7 +1,5 @@
 export type Localization = Record<string, unknown>;
 
-export type Content = Record<string, unknown>;
-
 export type Tag = {
   readonly source: string;
   readonly keyword: string;
@@ -18,7 +16,7 @@ export enum TypeEnum {
 export class ContentNode {
   readonly namespace: string;
   readonly schemaId: string;
-  readonly content: Content;
+  readonly content: Record<string, unknown>;
   readonly type: TypeEnum;
   readonly createdAt: string;
   readonly updatedAt: string;
