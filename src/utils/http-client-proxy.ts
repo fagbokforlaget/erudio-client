@@ -1,8 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export function sleep(ms = 2000): Promise<void> {
+const delay = async (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
-}
+};
 
 export class HttpClientProxy {
   private apiClient: AxiosInstance;
@@ -15,10 +15,13 @@ export class HttpClientProxy {
     });
     this.apiClient.interceptors.request.use(
       async (config) => {
-        // rate limit erudio api
-        // adds artificial sleep
-        if (config.method === 'PUT' || config.method === 'POST') {
-          await sleep();
+        if (
+          config.method === 'put' ||
+          config.method === 'post' ||
+          config.method === 'patch' ||
+          config.method === 'delete'
+        ) {
+          await delay(1000);
         }
         return config;
       },
