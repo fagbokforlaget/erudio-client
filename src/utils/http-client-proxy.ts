@@ -37,7 +37,7 @@ export class HttpClientProxy {
     } catch (e) {
       throw {
         message: e.message,
-        status: e.response.status,
+        status: e.response?.status,
       };
     }
   }
