@@ -4,6 +4,12 @@ const delay = async (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
+export interface HttpClientProxyError {
+  message: string;
+  status?: number;
+  data?: any;
+}
+
 export class HttpClientProxy {
   private apiClient: AxiosInstance;
 
@@ -35,9 +41,10 @@ export class HttpClientProxy {
       const response = await this.apiClient.get(url, config);
       return response.data;
     } catch (e) {
-      throw {
+      throw <HttpClientProxyError>{
         message: e.message,
         status: e.response?.status,
+        data: e.response?.data,
       };
     }
   }
