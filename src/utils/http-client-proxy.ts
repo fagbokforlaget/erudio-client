@@ -38,7 +38,7 @@ export class HttpClientProxy {
   }
   async get<T>(url: string, config?: AxiosRequestConfig<any>) {
     try {
-      const response = await this.apiClient.get(url, config);
+      const response = await this.apiClient.get<T>(url, config);
       return response.data;
     } catch (e) {
       throw <HttpClientProxyError>{
