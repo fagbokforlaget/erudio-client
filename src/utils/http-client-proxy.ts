@@ -36,7 +36,7 @@ export class HttpClientProxy {
       },
     );
   }
-  async get<T>(url: string, config?: AxiosRequestConfig<any>) {
+  async get<T>(url: string, config?: AxiosRequestConfig<any>): Promise<T> {
     try {
       const response = await this.apiClient.get<T>(url, config);
       return response.data;
