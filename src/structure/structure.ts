@@ -2,10 +2,10 @@ import { Node, PaginatedNodes } from './dto/paginated-nodes-dto';
 import { HttpClientProxy } from '../utils/http-client-proxy';
 
 export interface Options {
-  filter?: string;
-  page?: number;
-  limit?: number;
-  sort?: string;
+  readonly filter?: string;
+  readonly page?: number;
+  readonly limit?: number;
+  readonly sort?: string;
 }
 
 export class Structure {

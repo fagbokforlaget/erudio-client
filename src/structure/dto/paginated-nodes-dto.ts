@@ -1,10 +1,10 @@
 export class PaginatedNodes<T> {
   readonly data: T[];
   readonly pagination: {
-    total: number;
-    page: number;
-    limit: number;
-    next?: number;
+    readonly total: number;
+    readonly page: number;
+    readonly limit: number;
+    readonly next?: number;
   };
 }
 
