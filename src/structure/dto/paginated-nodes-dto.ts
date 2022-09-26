@@ -24,3 +24,10 @@ export interface Node {
   readonly updatedAt: string;
   readonly accessLevel: string;
 }
+
+export interface Options {
+  readonly filter?: string;
+  readonly page?: number;
+  readonly limit?: number;
+  readonly sort?: string;
+}
