@@ -4,7 +4,6 @@ import { content } from './data/get-structure-node-data';
 import { nodeList } from './data/get-structure-nodes';
 import axios from 'axios';
 
-jest.setTimeout(30000);
 const mock = new MockAdapter(axios);
 
 describe('Throws exemption for', () => {
