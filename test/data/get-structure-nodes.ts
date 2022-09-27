@@ -1,7 +1,7 @@
 export const nodeList = {
   data: [
     {
-      id: 'sample',
+      id: 'b942d4de-921c-4406-abbd-464dabb7b210',
       name: 'sample',
       slug: 'sample',
       namespace: 'sample',

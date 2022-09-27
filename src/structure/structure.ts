@@ -17,4 +17,11 @@ export class Structure {
       params: options,
     });
   }
+
+  public async listchildren(
+    structure_id: string,
+  ): Promise<PaginatedNodes<Node>> {
+    const url = `${this.baseUrl}/structures/children/nodes/${structure_id}`;
+    return await new HttpClientProxy().get<PaginatedNodes<Node>>(url);
+  }
 }

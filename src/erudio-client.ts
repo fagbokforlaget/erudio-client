@@ -24,7 +24,22 @@ export class ErudioClient {
   public getStructureNode = async (
     structureId: string,
     locale?: string,
-  ): Promise<ContentNode> => {
-    return new ContentFusion(this.host).getStructureNode(structureId, locale);
+  ): Promise<Array<ContentNode>> => {
+    const nodeList = await new Structure(this.host).listchildren(structureId);
+    console.log(nodeList);
+    let nodeListWithContent: ContentNode[];
+    nodeList.data.forEach(async (node) => {
+      const content = await new ContentFusion(this.host).getStructureNode(
+        node.id,
+        locale,
+      );
+      if (nodeListWithContent) {
+        nodeListWithContent.push(content);
+      } else {
+        nodeListWithContent = [content];
+      }
+      console.log(nodeListWithContent);
+    });
+    return nodeListWithContent;
   };
 }
