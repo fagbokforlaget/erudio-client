@@ -31,9 +31,13 @@ export class ErudioClient {
       namespace,
       structureId,
     );
-    const structureContents: Contents = await new ContentFusion(
-      this.host,
-    ).getStructureNode(structureId, locale);
+    let structureContents: Contents;
+    if (structure.contentId) {
+      structureContents = await new ContentFusion(this.host).getStructureNode(
+        structure.contentId,
+        locale,
+      );
+    }
     const nodeList = await new Structure(this.host).listchildren(structureId);
     let nodeListWithContent: Node[];
     for (let node of nodeList.data) {

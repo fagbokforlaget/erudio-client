@@ -46,8 +46,7 @@ describe('Should respond with valid data', () => {
     mock
       .onGet(`${structureService}children/nodes/${structureID}`)
       .replyOnce(200, nodeList);
-    mock.onGet(`${contentFusionService}${childNodeID}`).replyOnce(200, content);
-    mock.onGet(`${contentFusionService}${structureID}`).replyOnce(200, content);
+    mock.onGet(`${contentFusionService}${childNodeID}`).reply(200, content);
     const ec = new ErudioClient('dev.example.com');
     const allStructureData = await ec.getStructureNode(namespace, structureID);
     expect(allStructureData).toEqual(structureNodeData);
