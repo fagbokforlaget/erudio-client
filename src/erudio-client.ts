@@ -1,9 +1,10 @@
-import { PaginatedNodes, Options } from './structure/dto/paginated-nodes-dto';
 import {
-  Contents,
-  ContentNode,
+  PaginatedNodes,
+  Node,
   StructureNode,
-} from './content-fusion/dto/content-node-dto';
+  Options,
+} from './structure/dto/paginated-nodes-dto';
+import { Contents } from './content-fusion/dto/content-node-dto';
 import { Structure } from './structure/structure';
 import { ContentFusion } from './content-fusion/content-fusion';
 
@@ -17,7 +18,7 @@ export class ErudioClient {
   public getStructures = async (
     namespace: string,
     options?: Options,
-  ): Promise<PaginatedNodes<ContentNode>> => {
+  ): Promise<PaginatedNodes<Node>> => {
     return new Structure(this.host).listNodes(namespace, options);
   };
 
@@ -26,7 +27,7 @@ export class ErudioClient {
     structureId: string,
     locale?: string,
   ): Promise<StructureNode> => {
-    const structure: ContentNode = await new Structure(this.host).getSingleNode(
+    const structure: Node = await new Structure(this.host).getSingleNode(
       namespace,
       structureId,
     );
@@ -34,15 +35,17 @@ export class ErudioClient {
       this.host,
     ).getStructureNode(structureId, locale);
     const nodeList = await new Structure(this.host).listchildren(structureId);
-    let nodeListWithContent: ContentNode[];
+    let nodeListWithContent: Node[];
     for (let node of nodeList.data) {
-      const content: Contents = await new ContentFusion(
-        this.host,
-      ).getStructureNode(node.contentId, locale);
-      if (nodeListWithContent) {
-        nodeListWithContent.push({ ...node, contents: content });
-      } else {
-        nodeListWithContent = [{ ...node, contents: content }];
+      if (node.contentId) {
+        const content: Contents = await new ContentFusion(
+          this.host,
+        ).getStructureNode(node.contentId, locale);
+        if (nodeListWithContent) {
+          nodeListWithContent.push({ ...node, contents: content });
+        } else {
+          nodeListWithContent = [{ ...node, contents: content }];
+        }
       }
     }
     return <StructureNode>{

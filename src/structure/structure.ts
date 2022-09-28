@@ -1,5 +1,4 @@
-import { PaginatedNodes, Options } from './dto/paginated-nodes-dto';
-import { ContentNode } from '../content-fusion/dto/content-node-dto';
+import { PaginatedNodes, Options, Node } from './dto/paginated-nodes-dto';
 import { HttpClientProxy } from '../utils/http-client-proxy';
 
 export class Structure {
@@ -12,25 +11,25 @@ export class Structure {
   public async getSingleNode(
     namespace: string,
     structure_id: string,
-  ): Promise<ContentNode> {
+  ): Promise<Node> {
     const url = `${this.baseUrl}/structures/${namespace}/nodes/${structure_id}`;
-    return await new HttpClientProxy().get<ContentNode>(url);
+    return await new HttpClientProxy().get<Node>(url);
   }
 
   public async listNodes(
     namespace: string,
     options?: Options,
-  ): Promise<PaginatedNodes<ContentNode>> {
+  ): Promise<PaginatedNodes<Node>> {
     const url = `${this.baseUrl}/structures/${namespace}/nodes`;
-    return await new HttpClientProxy().get<PaginatedNodes<ContentNode>>(url, {
+    return await new HttpClientProxy().get<PaginatedNodes<Node>>(url, {
       params: options,
     });
   }
 
   public async listchildren(
     structureId: string,
-  ): Promise<PaginatedNodes<ContentNode>> {
+  ): Promise<PaginatedNodes<Node>> {
     const url = `${this.baseUrl}/structures/children/nodes/${structureId}`;
-    return await new HttpClientProxy().get<PaginatedNodes<ContentNode>>(url);
+    return await new HttpClientProxy().get<PaginatedNodes<Node>>(url);
   }
 }

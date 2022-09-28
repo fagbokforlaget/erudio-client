@@ -5,9 +5,9 @@ const delay = async (ms: number) => {
 };
 
 export interface HttpClientProxyError {
-  message: string;
-  status?: number;
-  data?: any;
+  readonly message: string;
+  readonly status?: number;
+  readonly data?: any;
 }
 
 export class HttpClientProxy {
