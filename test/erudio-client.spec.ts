@@ -1,7 +1,7 @@
 import { ErudioClient } from '../src/erudio-client';
 import MockAdapter from 'axios-mock-adapter';
-import { content } from './data/get-structure-node-data';
-import { nodeList } from './data/get-structure-nodes';
+import { content, structureNodeData } from './data/get-structure-node-data';
+import { nodeList, singleNode } from './data/get-structure-nodes';
 import axios from 'axios';
 
 const mock = new MockAdapter(axios);
@@ -41,14 +41,15 @@ describe('Should respond with valid data', () => {
     const contentFusionService =
       'http://edtech-content-fusion-service.dev.example.com/content/';
     mock
-      .onGet(`${structureService}/${namespace}/nodes/${structureID}`)
-      .replyOnce(200, nodeList);
+      .onGet(`${structureService}${namespace}/nodes/${structureID}`)
+      .replyOnce(200, singleNode);
     mock
       .onGet(`${structureService}children/nodes/${structureID}`)
       .replyOnce(200, nodeList);
     mock.onGet(`${contentFusionService}${childNodeID}`).replyOnce(200, content);
+    mock.onGet(`${contentFusionService}${structureID}`).replyOnce(200, content);
     const ec = new ErudioClient('dev.example.com');
     const allStructureData = await ec.getStructureNode(namespace, structureID);
-    expect(allStructureData).toEqual([content]);
+    expect(allStructureData).toEqual(structureNodeData);
   });
 });

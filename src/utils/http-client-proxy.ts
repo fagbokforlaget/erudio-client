@@ -41,7 +41,6 @@ export class HttpClientProxy {
       const response = await this.apiClient.get<T>(url, config);
       return response.data;
     } catch (e) {
-      console.log(e);
       throw <HttpClientProxyError>{
         message: e.message,
         status: e.response?.status,
