@@ -1,5 +1,5 @@
 import { HttpClientProxy } from '../utils/http-client-proxy';
-import { ContentNode } from './dto/content-node-dto';
+import { Contents } from './dto/content-node-dto';
 
 export class ContentFusion {
   private baseUrl: string;
@@ -11,9 +11,9 @@ export class ContentFusion {
   public async getStructureNode(
     structureId: string,
     locale?: string,
-  ): Promise<ContentNode> {
+  ): Promise<Contents> {
     const url = `${this.baseUrl}/content/${structureId}`;
-    const res = await new HttpClientProxy().get<ContentNode>(url);
+    const res = await new HttpClientProxy().get<Contents>(url);
     if (locale) {
       const localization = res.localization[locale];
       res.localization = {};

@@ -1,9 +1,9 @@
+import { PaginatedNodes, Options } from './structure/dto/paginated-nodes-dto';
 import {
-  Node,
-  PaginatedNodes,
-  Options,
-} from './structure/dto/paginated-nodes-dto';
-import { ContentNode } from './content-fusion/dto/content-node-dto';
+  Contents,
+  ContentNode,
+  StructureNode,
+} from './content-fusion/dto/content-node-dto';
 import { Structure } from './structure/structure';
 import { ContentFusion } from './content-fusion/content-fusion';
 
@@ -17,27 +17,38 @@ export class ErudioClient {
   public getStructures = async (
     namespace: string,
     options?: Options,
-  ): Promise<PaginatedNodes<Node>> => {
+  ): Promise<PaginatedNodes<ContentNode>> => {
     return new Structure(this.host).listNodes(namespace, options);
   };
 
   public getStructureNode = async (
+    namespace: string,
     structureId: string,
     locale?: string,
-  ): Promise<Array<ContentNode>> => {
+  ): Promise<StructureNode> => {
+    const structure: ContentNode = await new Structure(this.host).getSingleNode(
+      namespace,
+      structureId,
+    );
+    const structureContents: Contents = await new ContentFusion(
+      this.host,
+    ).getStructureNode(structureId, locale);
     const nodeList = await new Structure(this.host).listchildren(structureId);
     let nodeListWithContent: ContentNode[];
     for (let node of nodeList.data) {
-      const content = await new ContentFusion(this.host).getStructureNode(
-        node.id,
-        locale,
-      );
+      const content: Contents = await new ContentFusion(
+        this.host,
+      ).getStructureNode(node.contentId, locale);
       if (nodeListWithContent) {
-        nodeListWithContent.push(content);
+        nodeListWithContent.push({ ...node, contents: content });
       } else {
-        nodeListWithContent = [content];
+        nodeListWithContent = [{ ...node, contents: content }];
       }
     }
-    return nodeListWithContent;
+    return <StructureNode>{
+      ...structure,
+      contents: structureContents,
+      children: nodeListWithContent,
+    };
   };
 }
