@@ -55,7 +55,6 @@ describe('Should respond with valid data', () => {
     const allStructureData = await ec.getStructureNode(
       'fb29c948-327f-4f56-abb5-247e4cec5a22',
     );
-    console.log(allStructureData);
     expect(allStructureData).toEqual([content]);
   });
 });

@@ -26,9 +26,8 @@ export class ErudioClient {
     locale?: string,
   ): Promise<Array<ContentNode>> => {
     const nodeList = await new Structure(this.host).listchildren(structureId);
-    console.log(nodeList);
     let nodeListWithContent: ContentNode[];
-    nodeList.data.forEach(async (node) => {
+    for (let node of nodeList.data) {
       const content = await new ContentFusion(this.host).getStructureNode(
         node.id,
         locale,
@@ -38,8 +37,7 @@ export class ErudioClient {
       } else {
         nodeListWithContent = [content];
       }
-      console.log(nodeListWithContent);
-    });
+    }
     return nodeListWithContent;
   };
 }
