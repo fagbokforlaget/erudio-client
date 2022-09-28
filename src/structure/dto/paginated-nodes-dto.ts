@@ -1,3 +1,5 @@
+import { ContentNode } from '../../content-fusion/dto/content-node-dto';
+
 export class PaginatedNodes<T> {
   readonly data: T[];
   readonly pagination: {
@@ -6,6 +8,14 @@ export class PaginatedNodes<T> {
     readonly limit: number;
     readonly next?: number;
   };
+}
+
+export interface StructureChildren extends Node {
+  readonly contents: ContentNode;
+}
+
+export interface Structure extends Node {
+  readonly children: StructureChildren[];
 }
 
 export interface Node {
