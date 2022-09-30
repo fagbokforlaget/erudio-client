@@ -44,7 +44,7 @@ describe('Should respond with valid data', () => {
       .onGet(`${structureService}${namespace}/nodes/${structureID}`)
       .replyOnce(200, singleNode);
     mock
-      .onGet(`${structureService}${namespace}children/nodes/${structureID}`)
+      .onGet(`${structureService}${namespace}/children/nodes/${structureID}`)
       .replyOnce(200, nodeList);
     mock.onGet(`${contentFusionService}${childNodeID}`).reply(200, content);
     const ec = new ErudioClient('dev.example.com');
