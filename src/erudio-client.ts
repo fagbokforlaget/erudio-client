@@ -38,7 +38,10 @@ export class ErudioClient {
         locale,
       );
     }
-    const nodeList = await new Structure(this.host).listchildren(structureId);
+    const nodeList = await new Structure(this.host).listchildren(
+      namespace,
+      structureId,
+    );
     const nodeListWithContent: Node[] = [];
     for (const node of nodeList.data) {
       if (node.contentId) {

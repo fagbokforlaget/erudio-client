@@ -9,10 +9,10 @@ export class ContentFusion {
   }
 
   public async getStructureNode(
-    structureId: string,
+    contentId: string,
     locale?: string,
   ): Promise<Contents> {
-    const url = `${this.baseUrl}/content/${structureId}`;
+    const url = `${this.baseUrl}/content/${contentId}`;
     const res = await new HttpClientProxy().get<Contents>(url);
     if (locale) {
       const localization = res.localization[locale];

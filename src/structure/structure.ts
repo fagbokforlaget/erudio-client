@@ -27,9 +27,10 @@ export class Structure {
   }
 
   public async listchildren(
+    namespace: string,
     structureId: string,
   ): Promise<PaginatedNodes<Node>> {
-    const url = `${this.baseUrl}/structures/children/nodes/${structureId}`;
+    const url = `${this.baseUrl}/structures/${namespace}/children/nodes/${structureId}`;
     return await new HttpClientProxy().get<PaginatedNodes<Node>>(url);
   }
 }
