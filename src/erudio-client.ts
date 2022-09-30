@@ -39,7 +39,7 @@ export class ErudioClient {
       );
     }
     const nodeList = await new Structure(this.host).listchildren(structureId);
-    let nodeListWithContent: Node[] = [];
+    const nodeListWithContent: Node[] = [];
     for (const node of nodeList.data) {
       if (node.contentId) {
         const content: Contents = await new ContentFusion(
