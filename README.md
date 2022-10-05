@@ -1,4 +1,4 @@
-# Erucio Client
+# Erudio Client
 
 Erudio HTTP library to fetch data from various endpoint/GraphQL
 
