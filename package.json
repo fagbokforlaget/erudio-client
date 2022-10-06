@@ -6,6 +6,9 @@
   "directories": {
     "test": "test"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint \"src/**/*.ts\" --fix",
