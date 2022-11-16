@@ -42,10 +42,11 @@ describe('Throws exemption for', () => {
     console.log('Testscript log: ' + `${contentFusionService}${childNodeID}`);
     mock.onGet(`${contentFusionService}${childNodeID}`).replyOnce(404);
     const ec = new ErudioClient('dev.example.com');
-    const allStructureData = await ec.getStructureNode(namespace, structureID);
+    const allStructureData = ec.getStructureNode(namespace, structureID);
     await expect(allStructureData).rejects.toMatchObject({
       message: 'Request failed with status code 404',
       status: 404,
+      data: undefined,
     });
   });
 });
@@ -57,7 +58,6 @@ describe('Should respond with valid data', () => {
     const nodes = await ec.getStructures(namespace);
     expect(nodes).toEqual(nodeList);
   });
-
   it('Should return node details', async () => {
     const contentFusionService =
       'http://edtech-content-fusion-service.dev.example.com/content/';
