@@ -17,11 +17,32 @@ describe('Throws exemption for', () => {
     const ec = new ErudioClient('dev.example.com');
     mock
       .onAny('http://edtech-structure-service.dev.example.com/')
-      .networkErrorOnce();
+      .replyOnce(404);
     const allStructureData = ec.getStructures(namespace, {
       limit: 10,
       page: 0,
     });
+    await expect(allStructureData).rejects.toMatchObject({
+      message: 'Request failed with status code 404',
+      status: 404,
+    });
+  });
+  it('object not found', async () => {
+    mock.resetHistory();
+    mock.reset();
+    const contentFusionService =
+      'http://edtech-content-fusion-service.dev.example.com/content/';
+    mock
+      .onGet(`${structureService}${namespace}/nodes/${structureID}`)
+      .replyOnce(200, singleNode);
+    mock
+      .onGet(`${structureService}${namespace}/children/nodes/${structureID}`)
+      .replyOnce(200, nodeList);
+
+    console.log('Testscript log: ' + `${contentFusionService}${childNodeID}`);
+    mock.onGet(`${contentFusionService}${childNodeID}`).replyOnce(404);
+    const ec = new ErudioClient('dev.example.com');
+    const allStructureData = await ec.getStructureNode(namespace, structureID);
     await expect(allStructureData).rejects.toMatchObject({
       message: 'Request failed with status code 404',
       status: 404,
