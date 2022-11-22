@@ -1,4 +1,7 @@
-import { HttpClientProxy } from '../utils/http-client-proxy';
+import {
+  HttpClientProxy,
+  HttpClientProxyError,
+} from '../utils/http-client-proxy';
 import { Contents } from './dto/content-node-dto';
 
 export class ContentFusion {
@@ -19,6 +22,11 @@ export class ContentFusion {
         const localization = res.localization[locale];
         res.localization = {};
         res.localization[locale] = localization;
+      } else {
+        throw <HttpClientProxyError>{
+          message: 'Request failed with status code 404',
+          status: 404,
+        };
       }
     }
     return res;
