@@ -24,7 +24,7 @@ export class ContentFusion {
         res.localization[locale] = localization;
       } else {
         throw <HttpClientProxyError>{
-          message: 'Request failed with status code 404',
+          message: 'Specified localization not found',
           status: 404,
         };
       }

@@ -59,7 +59,7 @@ describe('Throws exemption for', () => {
     mock.onGet(`${contentFusionService}${childNodeID}`).reply(200, content);
     const allStructureData = ec.getStructureNode(namespace, structureID, 'nb');
     await expect(allStructureData).rejects.toMatchObject({
-      message: 'Request failed with status code 404',
+      message: 'Specified localization not found',
       status: 404,
     });
   });
