@@ -45,24 +45,6 @@ describe('Throws exemption for', () => {
       data: undefined,
     });
   });
-
-  it('object with specific localization not found', async () => {
-    mock.resetHistory();
-    mock.reset();
-    mock
-      .onGet(`${structureService}${namespace}/nodes/${structureID}`)
-      .replyOnce(200, singleNode);
-    mock
-      .onGet(`${structureService}${namespace}/children/nodes/${structureID}`)
-      .replyOnce(200, nodeList);
-
-    mock.onGet(`${contentFusionService}${childNodeID}`).reply(200, content);
-    const allStructureData = ec.getStructureNode(namespace, structureID, 'nb');
-    await expect(allStructureData).rejects.toMatchObject({
-      message: 'Specified localization not found',
-      status: 404,
-    });
-  });
 });
 
 describe('Should respond with valid data', () => {

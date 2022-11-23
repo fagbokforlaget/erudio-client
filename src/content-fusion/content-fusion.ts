@@ -23,10 +23,7 @@ export class ContentFusion {
         res.localization = {};
         res.localization[locale] = localization;
       } else {
-        throw <HttpClientProxyError>{
-          message: 'Specified localization not found',
-          status: 404,
-        };
+        res.localization = {};
       }
     }
     return res;
