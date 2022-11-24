@@ -4,7 +4,7 @@ import { content, structureNodeData } from './data/get-structure-node-data';
 import { nodeList, singleNode } from './data/get-structure-nodes';
 import axios from 'axios';
 import { structureTagData } from './data/get-tags-data';
-import { ServiceType } from 'src/utils/service.types';
+import { ServiceType } from '../src/utils/service.types';
 
 const mock = new MockAdapter(axios);
 const structureService =
