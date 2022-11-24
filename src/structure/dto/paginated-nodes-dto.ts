@@ -1,3 +1,4 @@
+import { TagSource } from '../../tag/dto/tag.dto';
 import { Contents } from '../../content-fusion/dto/content-node-dto';
 
 export class PaginatedNodes<T> {
@@ -37,4 +38,5 @@ export interface Node {
 
 export interface StructureNode extends Node {
   readonly children?: Node[];
+  readonly tags?: TagSource[];
 }
