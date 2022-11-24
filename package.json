@@ -1,6 +1,6 @@
 {
   "name": "@forlagshuset/erudio-client",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Erudio HTTP library to fetch data from various endpoint/GraphQL",
   "main": "dist/index.js",
   "directories": {
