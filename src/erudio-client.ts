@@ -7,6 +7,9 @@ import {
 import { Contents } from './content-fusion/dto/content-node-dto';
 import { Structure } from './structure/structure';
 import { ContentFusion } from './content-fusion/content-fusion';
+import { TagObject } from './tag/dto/tag.dto';
+import { TagService } from './tag/tag';
+import { ServiceType } from './utils/service.types';
 
 export class ErudioClient {
   private host: string;
@@ -31,6 +34,7 @@ export class ErudioClient {
       namespace,
       structureId,
     );
+
     let structureContents: Contents;
     if (structure.contentId) {
       structureContents = await new ContentFusion(this.host).getStructureNode(
@@ -38,6 +42,7 @@ export class ErudioClient {
         locale,
       );
     }
+
     const nodeList = await new Structure(this.host).listchildren(
       namespace,
       structureId,
@@ -51,10 +56,29 @@ export class ErudioClient {
         nodeListWithContent.push({ ...node, contents: content });
       }
     }
+
+    let parentStructureTags: TagObject | undefined;
+    try {
+      parentStructureTags = await this.getTags(
+        ServiceType.STRUCTURE,
+        structureId,
+      );
+    } catch (e) {
+      console.log(`Tags for ${structureId} not found`);
+    }
+
     return <StructureNode>{
       ...structure,
       contents: structureContents,
       children: nodeListWithContent,
+      tags: parentStructureTags?.tags || [],
     };
+  };
+
+  public getTags = async (
+    serviceType: ServiceType,
+    objectId: string,
+  ): Promise<TagObject> => {
+    return await new TagService(this.host).getTagObject(serviceType, objectId);
   };
 }
