@@ -27,7 +27,7 @@ export class ErudioClient {
     return new Structure(this.host).listNodes(namespace, options);
   };
 
-  public getStructureNodes = async (
+  public getStructureLinks = async (
     options: Partial<StructureLinkDto>,
   ): Promise<StructureLinkDto[]> => {
     return new StructureLink(this.host).listStructureLinks(options);
@@ -47,7 +47,12 @@ export class ErudioClient {
       locale,
     );
 
-    const tags = await this.getTags(ServiceType.LINK, linkId);
+    let tags: TagObject | undefined;
+    try {
+      tags = await this.getTags(ServiceType.LINK, linkId);
+    } catch {
+      console.log(`Tags for ${ServiceType.LINK} ${linkId} not found`);
+    }
 
     return { ...node, tags: tags?.tags || [] };
   };
@@ -91,7 +96,7 @@ export class ErudioClient {
         structureId,
       );
     } catch (e) {
-      console.log(`Tags for ${structureId} not found`);
+      console.log(`Tags for ${ServiceType.STRUCTURE} ${structureId} not found`);
     }
 
     return <StructureNode>{

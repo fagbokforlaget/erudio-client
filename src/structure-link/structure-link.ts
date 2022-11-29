@@ -17,10 +17,20 @@ export class StructureLink {
   }
 
   public async getOne(id: string): Promise<StructureLinkDto> {
-    return (
-      await new HttpClientProxy().get<StructureLinkDto[]>(this.url, {
+    const response = await new HttpClientProxy().get<StructureLinkDto[]>(
+      this.url,
+      {
         params: { id },
-      })
-    ).pop();
+      },
+    );
+
+    if (!response.length) {
+      throw {
+        message: 'Request failed with status code 404',
+        status: 404,
+        data: undefined,
+      };
+    }
+    return response.pop();
   }
 }
