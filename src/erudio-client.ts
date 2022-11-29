@@ -10,6 +10,8 @@ import { ContentFusion } from './content-fusion/content-fusion';
 import { TagObject } from './tag/dto/tag.dto';
 import { TagService } from './tag/tag';
 import { ServiceType } from './utils/service.types';
+import { StructureLinkDto } from './structure-link/dto/structure-link-dto';
+import { StructureLink } from './structure-link/structure-link';
 
 export class ErudioClient {
   private host: string;
@@ -23,6 +25,31 @@ export class ErudioClient {
     options?: Options,
   ): Promise<PaginatedNodes<Node>> => {
     return new Structure(this.host).listNodes(namespace, options);
+  };
+
+  public getStructureNodes = async (
+    options: Partial<StructureLinkDto>,
+  ): Promise<StructureLinkDto[]> => {
+    return new StructureLink(this.host).listStructureLinks(options);
+  };
+
+  public getLinkedStructure = async (
+    linkId: string,
+    locale?: string,
+  ): Promise<StructureNode> => {
+    const link: StructureLinkDto = await new StructureLink(this.host).getOne(
+      linkId,
+    );
+
+    const node = await this.getStructureNode(
+      link.sourceNamespaceId,
+      link.sourceId,
+      locale,
+    );
+
+    const tags = await this.getTags(ServiceType.LINK, linkId);
+
+    return { ...node, tags: tags?.tags || [] };
   };
 
   public getStructureNode = async (
@@ -43,7 +70,7 @@ export class ErudioClient {
       );
     }
 
-    const nodeList = await new Structure(this.host).listchildren(
+    const nodeList = await new Structure(this.host).listChildren(
       namespace,
       structureId,
     );

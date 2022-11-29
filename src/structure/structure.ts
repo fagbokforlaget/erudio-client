@@ -26,7 +26,7 @@ export class Structure {
     });
   }
 
-  public async listchildren(
+  public async listChildren(
     namespace: string,
     structureId: string,
   ): Promise<PaginatedNodes<Node>> {
