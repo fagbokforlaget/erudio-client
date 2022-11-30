@@ -1,4 +1,4 @@
-export interface StructureLinkDto {
+export interface StructureLink {
   readonly id: string;
   readonly slug: string;
   readonly targetId: string;

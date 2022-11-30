@@ -10,7 +10,7 @@ import { ContentFusion } from './content-fusion/content-fusion';
 import { TagObject } from './tag/dto/tag.dto';
 import { TagService } from './tag/tag';
 import { ServiceType } from './utils/service.types';
-import { StructureLinkDto } from './structure-link/dto/structure-link-dto';
+import { StructureLink as StructureLinkDto } from './structure-link/dto/structure-link';
 import { StructureLink } from './structure-link/structure-link';
 
 export class ErudioClient {

@@ -1,5 +1,5 @@
 import { HttpClientProxy } from '../utils/http-client-proxy';
-import { StructureLinkDto } from './dto/structure-link-dto';
+import { StructureLink as StructureLinkDto } from './dto/structure-link';
 
 export class StructureLink {
   private url: string;
