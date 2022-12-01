@@ -1,4 +1,7 @@
-import { HttpClientProxy } from '../utils/http-client-proxy';
+import {
+  HttpClientProxy,
+  HttpClientProxyError,
+} from '../utils/http-client-proxy';
 import { StructureLink as StructureLinkDto } from './dto/structure-link';
 
 export class StructureLink {
@@ -29,7 +32,7 @@ export class StructureLink {
         message: 'Request failed with status code 404',
         status: 404,
         data: undefined,
-      };
+      } as HttpClientProxyError;
     }
     return response.pop();
   }
