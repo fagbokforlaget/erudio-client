@@ -10,3 +10,4 @@ export {
   Contents,
   Tag,
 } from './src/content-fusion/dto/content-node-dto';
+export { StructureLink } from './src/structure-link/dto/structure-link';
