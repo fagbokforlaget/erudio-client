@@ -34,6 +34,7 @@ export interface Node {
   readonly updatedAt: string;
   readonly accessLevel: string;
   readonly contents?: Contents;
+  readonly localization: Record<string, unknown>;
 }
 
 export interface StructureNode extends Node {

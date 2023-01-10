@@ -12,6 +12,8 @@ import { TagService } from './tag/tag';
 import { ServiceType } from './utils/service.types';
 import { StructureLink as StructureLinkDto } from './structure-link/dto/structure-link';
 import { StructureLink } from './structure-link/structure-link';
+import { Localization } from './localization/localization';
+import { LocalizationDto } from './localization/dto/localization-dto';
 
 export class ErudioClient {
   private host: string;
@@ -75,6 +77,20 @@ export class ErudioClient {
       );
     }
 
+    let localization: Partial<LocalizationDto> = {};
+
+    if (locale) {
+      try {
+        localization = await new Localization(
+          this.host,
+        ).getStructureLocalization(structureId, locale);
+      } catch (e) {
+        console.log(
+          `Localization not found for ${ServiceType.STRUCTURE} ${structureId} not found`,
+        );
+      }
+    }
+
     const nodeList = await new Structure(this.host).listChildren(
       namespace,
       structureId,
@@ -101,6 +117,7 @@ export class ErudioClient {
 
     return <StructureNode>{
       ...structure,
+      localization: localization?.content,
       contents: structureContents,
       children: nodeListWithContent,
       tags: parentStructureTags?.tags || [],

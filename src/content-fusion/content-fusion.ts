@@ -1,7 +1,4 @@
-import {
-  HttpClientProxy,
-  HttpClientProxyError,
-} from '../utils/http-client-proxy';
+import { HttpClientProxy } from '../utils/http-client-proxy';
 import { Contents } from './dto/content-node-dto';
 
 export class ContentFusion {
