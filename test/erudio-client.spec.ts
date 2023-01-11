@@ -6,6 +6,7 @@ import axios from 'axios';
 import { structureLinkTagData, structureTagData } from './data/get-tags-data';
 import { ServiceType } from '../src/utils/service.types';
 import { structureLink } from './data/get-structure-link-data';
+import { structureLocalization } from './data/get-structure-localization';
 
 describe('Erudio Client', () => {
   let mock, ec: ErudioClient;
@@ -16,6 +17,8 @@ describe('Erudio Client', () => {
   const tagService = 'http://edtech-tag-store-service.dev.example.com/tags';
   const structureLinkService =
     'http://edtech-structure-link-service.dev.example.com/structures/links';
+  const localizationService =
+    'http://edtech-localization-service.dev.example.com/i18n';
 
   const namespace = 'fb29c948-327f-4f56-abb5-247e4cec5a22';
   const structureID = 'b942d4de-921c-4406-abbd-464dabb7b210';
@@ -160,6 +163,31 @@ describe('Erudio Client', () => {
       expect(allStructureData).toEqual({
         ...structureNodeData,
         tags: structureLinkTagData.tags,
+      });
+    });
+
+    it('should return structure with localized data', async () => {
+      mock
+        .onGet(`${structureService}${namespace}/nodes/${structureID}`)
+        .replyOnce(200, singleNode);
+      mock
+        .onGet(`${structureService}${namespace}/children/nodes/${structureID}`)
+        .replyOnce(200, nodeList);
+      mock.onGet(`${contentFusionService}${childNodeID}`).reply(200, content);
+      mock
+        .onGet(`${localizationService}/${structureID}/en`)
+        .reply(200, structureLocalization);
+
+      const allStructureData = await ec.getStructureNode(
+        namespace,
+        structureID,
+        'en',
+      );
+
+      ['name', 'description', 'cover'].forEach((key) => {
+        expect(allStructureData.localization[key]).toEqual(
+          structureLocalization.content[key],
+        );
       });
     });
   });
