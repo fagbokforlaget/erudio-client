@@ -1,12 +1,12 @@
-import { ErudioClient } from '../src/erudio-client';
-import MockAdapter from 'axios-mock-adapter';
-import { content, structureNodeData } from './data/get-structure-node-data';
-import { nodeList, singleNode } from './data/get-structure-nodes';
 import axios from 'axios';
-import { structureLinkTagData, structureTagData } from './data/get-tags-data';
+import MockAdapter from 'axios-mock-adapter';
+import { ErudioClient } from '../src/erudio-client';
 import { ServiceType } from '../src/utils/service.types';
 import { structureLink } from './data/get-structure-link-data';
 import { structureLocalization } from './data/get-structure-localization';
+import { content, structureNodeData } from './data/get-structure-node-data';
+import { nodeList, singleNode } from './data/get-structure-nodes';
+import { structureLinkTagData, structureTagData } from './data/get-tags-data';
 
 describe('Erudio Client', () => {
   let mock, ec: ErudioClient;
@@ -18,7 +18,7 @@ describe('Erudio Client', () => {
   const structureLinkService =
     'http://edtech-structure-link-service.dev.example.com/structures/links';
   const localizationService =
-    'http://edtech-localization-service.dev.example.com/i18n';
+    'http://edtech-localization-service.dev.example.com/localizations';
 
   const namespace = 'fb29c948-327f-4f56-abb5-247e4cec5a22';
   const structureID = 'b942d4de-921c-4406-abbd-464dabb7b210';
@@ -175,7 +175,9 @@ describe('Erudio Client', () => {
         .replyOnce(200, nodeList);
       mock.onGet(`${contentFusionService}${childNodeID}`).reply(200, content);
       mock
-        .onGet(`${localizationService}/${structureID}/en`)
+        .onGet(
+          `${localizationService}/${ServiceType.STRUCTURE}/${structureID}/en`,
+        )
         .reply(200, structureLocalization);
 
       const allStructureData = await ec.getStructureNode(

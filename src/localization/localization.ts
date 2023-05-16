@@ -1,4 +1,5 @@
 import { HttpClientProxy } from '../utils/http-client-proxy';
+import { ServiceType } from '../utils/service.types';
 import { LocalizationDto } from './dto/localization-dto';
 
 export class Localization {
@@ -9,10 +10,10 @@ export class Localization {
   }
 
   public async getStructureLocalization(
-    structure_id: string,
+    structureId: string,
     locale: string,
   ): Promise<LocalizationDto> {
-    const url = `${this.baseUrl}/i18n/${structure_id}/${locale}`;
+    const url = `${this.baseUrl}/localizations/${ServiceType.STRUCTURE}/${structureId}/${locale}`;
     return await new HttpClientProxy().get<LocalizationDto>(url);
   }
 }
