@@ -40,3 +40,20 @@ export const singleNode = {
   updatedAt: 'sample',
   accessLevel: 'sample',
 };
+
+export const singleLearningPathNode = {
+  id: 'sample',
+  name: 'sample',
+  slug: 'sample',
+  namespace: 'sample',
+  description: 'sample',
+  parent: 'sample',
+  cover: 'sample',
+  order: 45,
+  type: 'sample',
+  contentId: 'b942d4de-921c-4406-abbd-464dabb7b212',
+  contentType: 'learning-path',
+  createdAt: 'sample',
+  updatedAt: 'sample',
+  accessLevel: 'sample',
+};

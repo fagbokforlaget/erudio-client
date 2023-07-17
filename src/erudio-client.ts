@@ -1,19 +1,21 @@
-import {
-  PaginatedNodes,
-  Node,
-  StructureNode,
-  Options,
-} from './structure/dto/paginated-nodes-dto';
-import { Contents } from './content-fusion/dto/content-node-dto';
-import { Structure } from './structure/structure';
 import { ContentFusion } from './content-fusion/content-fusion';
+import { Contents } from './content-fusion/dto/content-node-dto';
+import { LearningPathDto } from './learning-path/dto/learning-path.dto';
+import { LearningPath } from './learning-path/learnig-path';
+import { LocalizationDto } from './localization/dto/localization-dto';
+import { Localization } from './localization/localization';
+import { StructureLink as StructureLinkDto } from './structure-link/dto/structure-link';
+import { StructureLink } from './structure-link/structure-link';
+import {
+  Node,
+  Options,
+  PaginatedNodes,
+  StructureNode,
+} from './structure/dto/paginated-nodes-dto';
+import { Structure } from './structure/structure';
 import { TagObject } from './tag/dto/tag.dto';
 import { TagService } from './tag/tag';
 import { ServiceType } from './utils/service.types';
-import { StructureLink as StructureLinkDto } from './structure-link/dto/structure-link';
-import { StructureLink } from './structure-link/structure-link';
-import { Localization } from './localization/localization';
-import { LocalizationDto } from './localization/dto/localization-dto';
 
 export class ErudioClient {
   private host: string;
@@ -64,6 +66,7 @@ export class ErudioClient {
     structureId: string,
     locale?: string,
   ): Promise<StructureNode> => {
+    let learningPath: LearningPathDto;
     const structure: Node = await new Structure(this.host).getSingleNode(
       namespace,
       structureId,
@@ -75,6 +78,14 @@ export class ErudioClient {
         structure.contentId,
         locale,
       );
+      if (
+        structure.contentType === 'learning-path' &&
+        structureContents.content.learningPath?.type === 'ref'
+      ) {
+        learningPath = await new LearningPath(this.host).getlearningPath(
+          structureContents.content.learningPath?.id,
+        );
+      }
     }
 
     let localization: Partial<LocalizationDto> = {};
@@ -118,6 +129,7 @@ export class ErudioClient {
     return <StructureNode>{
       ...structure,
       localization: localization?.content,
+      learningPath,
       contents: structureContents,
       children: nodeListWithContent,
       tags: parentStructureTags?.tags || [],
