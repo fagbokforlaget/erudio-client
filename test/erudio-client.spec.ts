@@ -29,7 +29,7 @@ describe('Erudio Client', () => {
   const localizationService =
     'http://edtech-localization-service.dev.example.com/localizations';
   const learningPathService =
-    'http://edtech-learning-path-runner.dev.example.com/learning-paths';
+    'http://edtech-learning-path-runner-service.dev.example.com/learning-paths';
 
   const namespace = 'fb29c948-327f-4f56-abb5-247e4cec5a22';
   const structureID = 'b942d4de-921c-4406-abbd-464dabb7b210';
