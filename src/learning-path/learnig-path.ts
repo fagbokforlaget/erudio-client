@@ -11,7 +11,7 @@ export class LearningPath {
     this.baseUrl = `http://edtech-learning-path-runner-service.${host}`;
   }
 
-  public async getlearningPath(
+  public async getLearningPath(
     id: string,
     locale: string,
   ): Promise<LearningPathWithLocalizationDto> {
@@ -22,7 +22,7 @@ export class LearningPath {
     if (locale && learningPath?.localizations) {
       localization = learningPath.localizations.find(
         (l) => l.locale === locale,
-      ).content;
+      )?.content;
       learningPath.localizations = undefined;
     }
     return { ...learningPath, localization };

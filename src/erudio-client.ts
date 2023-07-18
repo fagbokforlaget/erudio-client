@@ -83,7 +83,7 @@ export class ErudioClient {
         structureContents.content.learningPath?.type === 'ref'
       ) {
         try {
-          learningPath = await new LearningPath(this.host).getlearningPath(
+          learningPath = await new LearningPath(this.host).getLearningPath(
             structureContents.content.learningPath?.id,
             locale,
           );

@@ -232,5 +232,34 @@ describe('Erudio Client', () => {
         localization: learningPath.localizations[0].content,
       });
     });
+
+    it('Should return structure node list with learning path and invalid locale value', async () => {
+      mock
+        .onGet(`${structureService}${namespace}/nodes/${structureID}`)
+        .replyOnce(200, singleLearningPathNode);
+      mock
+        .onGet(`${structureService}${namespace}/children/nodes/${structureID}`)
+        .replyOnce(200, nodeList);
+      mock
+        .onGet(`${contentFusionService}${childNodeID}`)
+        .reply(200, learningPathContent);
+      mock
+        .onGet(
+          `${learningPathService}/${learningPathContent.content.learningPath.id}`,
+        )
+        .reply(200, learningPath);
+
+      const allStructureData = await ec.getStructureNode(
+        namespace,
+        structureID,
+        'non-existing-locale',
+      );
+
+      expect(allStructureData.learningPath).toMatchObject({
+        ...learningPath,
+        localizations: undefined,
+        localization: undefined,
+      });
+    });
   });
 });
