@@ -223,10 +223,13 @@ describe('Erudio Client', () => {
       const allStructureData = await ec.getStructureNode(
         namespace,
         structureID,
+        'locale123',
       );
 
-      expect(allStructureData).toMatchObject({
-        learningPath,
+      expect(allStructureData.learningPath).toMatchObject({
+        ...learningPath,
+        localizations: undefined,
+        localization: learningPath.localizations[0].content,
       });
     });
   });

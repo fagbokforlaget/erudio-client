@@ -1,5 +1,5 @@
 import { Contents } from '../../content-fusion/dto/content-node-dto';
-import { LearningPathDto } from '../../learning-path/dto/learning-path.dto';
+import { LearningPathWithLocalizationDto } from '../../learning-path/dto/learning-path.dto';
 import { TagSource } from '../../tag/dto/tag.dto';
 
 export class PaginatedNodes<T> {
@@ -36,7 +36,7 @@ export interface Node {
   readonly accessLevel: string;
   readonly contents?: Contents;
   readonly localization: Record<string, unknown>;
-  readonly learningPath?: LearningPathDto;
+  readonly learningPath?: LearningPathWithLocalizationDto;
 }
 
 export interface StructureNode extends Node {

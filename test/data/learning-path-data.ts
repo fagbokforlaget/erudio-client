@@ -8,4 +8,17 @@ export const learningPath: LearningPathDto = {
   createdBy: 'created_by',
   createdAt: 'created_at',
   updatedAt: 'updated_at',
+  learningPathElements: [
+    {
+      id: 'id',
+      namespaceId: 'namespaceId',
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+    },
+  ],
+  tags: [],
+  localizations: [
+    { locale: 'locale123', content: { con1: 'con1', con2: 'con2' } },
+    { locale: 'locale456', content: { con3: 'con4', con5: 'con6' } },
+  ],
 };

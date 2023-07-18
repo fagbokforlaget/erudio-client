@@ -1,6 +1,6 @@
 import { ContentFusion } from './content-fusion/content-fusion';
 import { Contents } from './content-fusion/dto/content-node-dto';
-import { LearningPathDto } from './learning-path/dto/learning-path.dto';
+import { LearningPathWithLocalizationDto } from './learning-path/dto/learning-path.dto';
 import { LearningPath } from './learning-path/learnig-path';
 import { LocalizationDto } from './localization/dto/localization-dto';
 import { Localization } from './localization/localization';
@@ -66,7 +66,7 @@ export class ErudioClient {
     structureId: string,
     locale?: string,
   ): Promise<StructureNode> => {
-    let learningPath: LearningPathDto;
+    let learningPath: LearningPathWithLocalizationDto;
     const structure: Node = await new Structure(this.host).getSingleNode(
       namespace,
       structureId,
@@ -85,6 +85,7 @@ export class ErudioClient {
         try {
           learningPath = await new LearningPath(this.host).getlearningPath(
             structureContents.content.learningPath?.id,
+            locale,
           );
         } catch (e) {
           console.log(

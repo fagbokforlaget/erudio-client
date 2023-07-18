@@ -1,3 +1,5 @@
+import { TagObject } from '../../tag/dto/tag.dto';
+
 export interface LearningPathDto {
   readonly id: string;
   readonly name: string;
@@ -6,6 +8,12 @@ export interface LearningPathDto {
   readonly forkId?: string;
   readonly status: string;
   readonly namespaceId?: string;
+  readonly learningPathElements: LearningPathElementOutputDto[];
+  readonly tags: TagObject[];
+  localizations: {
+    readonly locale: string;
+    readonly content: Record<string, unknown>;
+  }[];
   readonly createdBy: string;
   readonly createdAt: string;
   readonly updatedAt: string;
@@ -23,3 +31,21 @@ interface Metadata {
   readonly bannerCopyright?: string;
   readonly duration?: number;
 }
+
+class LearningPathElementOutputDto {
+  readonly id: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+  readonly namespaceId: string;
+  readonly description?: string;
+  readonly contentId?: string;
+  readonly contentType?: string;
+  readonly condition?: Record<string, unknown>;
+}
+
+export type LearningPathWithLocalizationDto = Omit<
+  LearningPathDto,
+  'localizations'
+> & {
+  readonly localization?: Record<string, unknown>;
+};
