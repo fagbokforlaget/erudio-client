@@ -53,6 +53,13 @@ export const content = {
   },
 };
 
+export const learningPathContent = {
+  content: {
+    ...content,
+    learningPath: { type: 'ref', id: 'b942d4de-921c-4406-abbd-464dabb7b323' },
+  },
+};
+
 export const structureNodeData = {
   id: 'sample',
   name: 'sample',

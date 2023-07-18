@@ -16,7 +16,9 @@ export enum TypeEnum {
 export class Contents {
   readonly namespace: string;
   readonly schemaId: string;
-  readonly content: Record<string, unknown>;
+  readonly content: Record<string, unknown> & {
+    learningPath?: { id: string; type: string };
+  };
   readonly type: TypeEnum;
   readonly createdAt: string;
   readonly updatedAt: string;

@@ -40,3 +40,8 @@ export const singleNode = {
   updatedAt: 'sample',
   accessLevel: 'sample',
 };
+
+export const singleLearningPathNode = {
+  ...singleNode,
+  contentType: 'learning-path',
+};

@@ -4,9 +4,18 @@ import { ErudioClient } from '../src/erudio-client';
 import { ServiceType } from '../src/utils/service.types';
 import { structureLink } from './data/get-structure-link-data';
 import { structureLocalization } from './data/get-structure-localization';
-import { content, structureNodeData } from './data/get-structure-node-data';
-import { nodeList, singleNode } from './data/get-structure-nodes';
+import {
+  content,
+  learningPathContent,
+  structureNodeData,
+} from './data/get-structure-node-data';
+import {
+  nodeList,
+  singleLearningPathNode,
+  singleNode,
+} from './data/get-structure-nodes';
 import { structureLinkTagData, structureTagData } from './data/get-tags-data';
+import { learningPath } from './data/learning-path-data';
 
 describe('Erudio Client', () => {
   let mock, ec: ErudioClient;
@@ -19,6 +28,8 @@ describe('Erudio Client', () => {
     'http://edtech-structure-link-service.dev.example.com/structures/links';
   const localizationService =
     'http://edtech-localization-service.dev.example.com/localizations';
+  const learningPathService =
+    'http://edtech-learning-path-runner-service.dev.example.com/learning-paths';
 
   const namespace = 'fb29c948-327f-4f56-abb5-247e4cec5a22';
   const structureID = 'b942d4de-921c-4406-abbd-464dabb7b210';
@@ -190,6 +201,64 @@ describe('Erudio Client', () => {
         expect(allStructureData.localization[key]).toEqual(
           structureLocalization.content[key],
         );
+      });
+    });
+
+    it('Should return structure node list with learning path', async () => {
+      mock
+        .onGet(`${structureService}${namespace}/nodes/${structureID}`)
+        .replyOnce(200, singleLearningPathNode);
+      mock
+        .onGet(`${structureService}${namespace}/children/nodes/${structureID}`)
+        .replyOnce(200, nodeList);
+      mock
+        .onGet(`${contentFusionService}${childNodeID}`)
+        .reply(200, learningPathContent);
+      mock
+        .onGet(
+          `${learningPathService}/${learningPathContent.content.learningPath.id}`,
+        )
+        .reply(200, learningPath);
+
+      const allStructureData = await ec.getStructureNode(
+        namespace,
+        structureID,
+        'locale123',
+      );
+
+      expect(allStructureData.learningPath).toMatchObject({
+        ...learningPath,
+        localizations: undefined,
+        localization: learningPath.localizations[0].content,
+      });
+    });
+
+    it('Should return structure node list with learning path and invalid locale value', async () => {
+      mock
+        .onGet(`${structureService}${namespace}/nodes/${structureID}`)
+        .replyOnce(200, singleLearningPathNode);
+      mock
+        .onGet(`${structureService}${namespace}/children/nodes/${structureID}`)
+        .replyOnce(200, nodeList);
+      mock
+        .onGet(`${contentFusionService}${childNodeID}`)
+        .reply(200, learningPathContent);
+      mock
+        .onGet(
+          `${learningPathService}/${learningPathContent.content.learningPath.id}`,
+        )
+        .reply(200, learningPath);
+
+      const allStructureData = await ec.getStructureNode(
+        namespace,
+        structureID,
+        'non-existing-locale',
+      );
+
+      expect(allStructureData.learningPath).toMatchObject({
+        ...learningPath,
+        localizations: undefined,
+        localization: undefined,
       });
     });
   });
