@@ -1,12 +1,25 @@
 export interface LearningPathDto {
-  readonly _id: string;
+  readonly id: string;
   readonly name: string;
   readonly slug: string;
-  readonly metadata?: Record<string, unknown>;
-  readonly fork_id?: string;
+  readonly metadata?: Metadata;
+  readonly forkId?: string;
   readonly status: string;
-  readonly created_namespace_id?: string;
-  readonly created_by: string;
-  readonly created_at: string;
-  readonly updated_at: string;
+  readonly namespaceId?: string;
+  readonly createdBy: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+}
+
+interface Metadata {
+  readonly description?: string;
+  readonly descriptionInstructor?: string;
+  readonly author?: string;
+  readonly coverId?: string;
+  readonly coverAlt?: string;
+  readonly coverCopyright?: string;
+  readonly bannerId?: string;
+  readonly bannerAlt?: string;
+  readonly bannerCopyright?: string;
+  readonly duration?: number;
 }
