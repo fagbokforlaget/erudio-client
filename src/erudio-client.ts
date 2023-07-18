@@ -82,9 +82,15 @@ export class ErudioClient {
         structure.contentType === 'learning-path' &&
         structureContents.content.learningPath?.type === 'ref'
       ) {
-        learningPath = await new LearningPath(this.host).getlearningPath(
-          structureContents.content.learningPath?.id,
-        );
+        try {
+          learningPath = await new LearningPath(this.host).getlearningPath(
+            structureContents.content.learningPath?.id,
+          );
+        } catch (e) {
+          console.log(
+            `Learning path not found for ${ServiceType.STRUCTURE} ${structureId} not found`,
+          );
+        }
       }
     }
 
