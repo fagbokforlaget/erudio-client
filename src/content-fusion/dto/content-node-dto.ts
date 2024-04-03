@@ -24,5 +24,6 @@ export class Contents {
   readonly updatedAt: string;
   readonly id: string;
   localization: Record<string, Localization>;
+  localizations: Record<string, Localization>;
   readonly tags: Tag[];
 }
