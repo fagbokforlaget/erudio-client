@@ -15,8 +15,8 @@ export class ContentFusion {
     const url = `${this.baseUrl}/content/${contentId}`;
     const res = await new HttpClientProxy().get<Contents>(url);
     if (locale) {
-      if (res?.localization?.[locale]) {
-        const localization = res.localization[locale];
+      if (res?.localizations?.[locale]) {
+        const localization = res.localizations[locale];
         res.localization = {};
         res.localization[locale] = localization;
       } else {
