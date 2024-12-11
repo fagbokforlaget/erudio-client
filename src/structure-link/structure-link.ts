@@ -8,7 +8,7 @@ export class StructureLink {
   private url: string;
 
   constructor(host: string) {
-    this.url = `http://edtech-structure-link-service.${host}/structures/links`;
+    this.url = `http://edtech-structure-link-service${host}/structures/links`;
   }
 
   public async listStructureLinks(

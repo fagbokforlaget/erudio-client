@@ -5,7 +5,7 @@ export class ContentFusion {
   private baseUrl: string;
 
   constructor(host: string) {
-    this.baseUrl = `http://edtech-content-fusion-service.${host}`;
+    this.baseUrl = `http://edtech-content-fusion-service${host}`;
   }
 
   public async getStructureNode(

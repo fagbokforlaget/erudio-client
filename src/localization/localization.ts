@@ -6,7 +6,7 @@ export class Localization {
   private readonly baseUrl: string;
 
   constructor(host: string) {
-    this.baseUrl = `http://edtech-localization-service.${host}`;
+    this.baseUrl = `http://edtech-localization-service${host}`;
   }
 
   public async getStructureLocalization(
