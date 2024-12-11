@@ -1,6 +1,8 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { randomUUID } from 'crypto';
 import { ErudioClient } from '../src/erudio-client';
+import { HttpClientProxy } from '../src/utils/http-client-proxy';
 import { ServiceType } from '../src/utils/service.types';
 import { structureLink } from './data/get-structure-link-data';
 import { structureLocalization } from './data/get-structure-localization';
@@ -260,6 +262,65 @@ describe('Erudio Client', () => {
         localizations: undefined,
         localization: undefined,
       });
+    });
+  });
+
+  describe('Should properly set suffix for host value in constructor', () => {
+    it('Should properly set value for undefined given', async () => {
+      const namespaceId = randomUUID();
+      const spy = jest
+        .spyOn(HttpClientProxy.prototype, 'get')
+        .mockImplementation(jest.fn());
+
+      const client = new ErudioClient(undefined);
+
+      client.getStructures(namespaceId);
+      expect(spy).toBeCalledWith(
+        `http://edtech-structure-service/structures/${namespaceId}/nodes`,
+        { params: undefined },
+      );
+    });
+    it('Should properly set value for empty string given', () => {
+      const namespaceId = randomUUID();
+      const spy = jest
+        .spyOn(HttpClientProxy.prototype, 'get')
+        .mockImplementation(jest.fn());
+
+      const client = new ErudioClient('');
+
+      client.getStructures(namespaceId);
+      expect(spy).toBeCalledWith(
+        `http://edtech-structure-service/structures/${namespaceId}/nodes`,
+        { params: undefined },
+      );
+    });
+    it('Should properly set value for value with dot given', () => {
+      const namespaceId = randomUUID();
+      const spy = jest
+        .spyOn(HttpClientProxy.prototype, 'get')
+        .mockImplementation(jest.fn());
+
+      const client = new ErudioClient('.something');
+
+      client.getStructures(namespaceId);
+      expect(spy).toBeCalledWith(
+        `http://edtech-structure-service.something/structures/${namespaceId}/nodes`,
+        { params: undefined },
+      );
+    });
+    it('Should properly set value for value without dot given', () => {
+      const namespaceId = randomUUID();
+      const spy = jest
+        .spyOn(HttpClientProxy.prototype, 'get')
+        .mockImplementation(jest.fn());
+
+      const client = new ErudioClient('something');
+
+      client.getStructures(namespaceId);
+      expect(spy).toBeCalledWith(
+        `http://edtech-structure-service.something/structures/${namespaceId}/nodes`,
+        { params: undefined },
+      );
     });
   });
 });

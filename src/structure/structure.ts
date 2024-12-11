@@ -1,11 +1,11 @@
-import { PaginatedNodes, Options, Node } from './dto/paginated-nodes-dto';
 import { HttpClientProxy } from '../utils/http-client-proxy';
+import { Node, Options, PaginatedNodes } from './dto/paginated-nodes-dto';
 
 export class Structure {
   private baseUrl: string;
 
   constructor(host: string) {
-    this.baseUrl = `http://edtech-structure-service.${host}`;
+    this.baseUrl = `http://edtech-structure-service${host}`;
   }
 
   public async getSingleNode(

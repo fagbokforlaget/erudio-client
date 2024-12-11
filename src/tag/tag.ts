@@ -6,7 +6,7 @@ export class TagService {
   private baseUrl: string;
 
   constructor(host: string) {
-    this.baseUrl = `http://edtech-tag-store-service.${host}`;
+    this.baseUrl = `http://edtech-tag-store-service${host}`;
     // this.baseUrl = 'http://localhost:3000';
   }
 

@@ -8,7 +8,7 @@ export class LearningPath {
   private readonly baseUrl: string;
 
   constructor(host: string) {
-    this.baseUrl = `http://edtech-learning-path-runner-service.${host}`;
+    this.baseUrl = `http://edtech-learning-path-runner-service${host}`;
   }
 
   public async getLearningPath(

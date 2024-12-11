@@ -21,7 +21,15 @@ export class ErudioClient {
   private host: string;
 
   constructor(host: string) {
-    this.host = host;
+    if (host) {
+      if (host[0] === '.') {
+        this.host = host;
+      } else {
+        this.host = `.${host}`;
+      }
+    } else {
+      this.host = '';
+    }
   }
 
   public getStructures = async (
